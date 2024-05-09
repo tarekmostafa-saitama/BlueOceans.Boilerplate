@@ -1,0 +1,10 @@
+{
+  "MailSettings": {
+    "DisplayName": "Kaitlin Lakin",
+    "From": "kaitlin98@ethereal.email",
+    "Host": "smtp.ethereal.email",
+    "Password": "CZJrCQUsy2tWAkZZDm",
+    "Port": 587,
+    "UserName": "kaitlin98@ethereal.email"
+  }
+}

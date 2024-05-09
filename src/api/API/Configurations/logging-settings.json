@@ -1,0 +1,7 @@
+{
+  "LoggerSettings": {
+    "AppName": "Bo.Boilerplate",
+    "WriteToFile": true,
+    "StructuredConsoleLogging": true
+  }
+}
