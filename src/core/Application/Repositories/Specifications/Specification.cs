@@ -2,14 +2,14 @@
 
 namespace Application.Repositories.Specifications;
 
+
 public class Specification<T> : ISpecification<T>
 {
-    public Specification(Expression<Func<T, bool>> criteria)
+    public Specification()
     {
-        Criteria = criteria;
     }
     // Where Setup
-    public Expression<Func<T, bool>> Criteria { get; }
+    public Expression<Func<T, bool>> Criteria { get; private set; }
 
     // Order Setup
     public Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; private set; }
@@ -45,6 +45,12 @@ public class Specification<T> : ISpecification<T>
         Skip = skip;
         Take = take;
         IsPagingEnabled = true;
+        return this;
+    }
+
+    public Specification<T> ApplyCriteria(Expression<Func<T, bool>> criteria)
+    {
+        Criteria = criteria;
         return this;
     }
 }

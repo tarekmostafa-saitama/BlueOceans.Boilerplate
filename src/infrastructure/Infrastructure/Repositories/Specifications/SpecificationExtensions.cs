@@ -7,7 +7,7 @@ public static class SpecificationExtensions
 {
     public static IQueryable<T> ApplySpecification<T>(this IQueryable<T> query, ISpecification<T> spec) where T : class
     {
-        
+
         query = spec.OrderBy != null
             ? spec.OrderBy(query)
             : query;
@@ -15,9 +15,10 @@ public static class SpecificationExtensions
         query = spec.IsPagingEnabled
             ? query.Skip(spec.Skip).Take(spec.Take)
             : query;
-        
+
         query = spec.IsTrackingEnabled ? query : query.AsNoTracking();
 
-        return query.Where(spec.Criteria);
+        query = spec.Criteria == null ? query : query.Where(spec.Criteria);
+        return query;
     }
 }
