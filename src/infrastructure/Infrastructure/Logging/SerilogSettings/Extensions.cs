@@ -15,6 +15,12 @@ public static class Extensions
     {
         builder.Services.AddOptions<LoggerSettings>().BindConfiguration(nameof(LoggerSettings));
 
+        // Get ServiceProvider before calling UseSerilog
+        var serviceProvider = builder.Services.BuildServiceProvider();
+        var loggerSettings = serviceProvider.GetRequiredService<IOptions<LoggerSettings>>().Value;
+        var appName = loggerSettings.AppName;
+        Console.WriteLine(FiggleFonts.Standard.Render(appName));
+
         _ = builder.Host.UseSerilog((_, sp, serilogConfig) =>
         {
             var loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
@@ -27,7 +33,6 @@ public static class Extensions
             ConfigureWriteToFile(serilogConfig, writeToFile);
             SetMinimumLogLevel(serilogConfig, minLogLevel);
             OverideMinimumLogLevel(serilogConfig);
-            Console.WriteLine(FiggleFonts.Standard.Render(loggerSettings.AppName));
         });
     }
 
@@ -39,8 +44,7 @@ public static class Extensions
             .Enrich.WithExceptionDetails()
             .Enrich.WithMachineName()
             .Enrich.WithProcessId()
-            .Enrich.WithThreadId()
-            .Enrich.FromLogContext();
+            .Enrich.WithThreadId();
     }
 
     private static void ConfigureConsoleLogging(LoggerConfiguration serilogConfig, bool structuredConsoleLogging)
