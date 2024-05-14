@@ -27,4 +27,6 @@ public interface IRepository<TEntity> where TEntity : class
 
     void RemoveRange(
         Expression<Func<TEntity, bool>> criteria);
+
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> criteria = null);
 }

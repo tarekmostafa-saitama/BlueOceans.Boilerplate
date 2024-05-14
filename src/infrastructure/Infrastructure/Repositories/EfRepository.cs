@@ -75,4 +75,9 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         if (criteria != null) query = query.Where(criteria);
         query.ExecuteDelete();
     }
+    public async Task<int> CountAsync(Expression<Func<TEntity, bool>> criteria = null)
+    {
+        if (criteria != null) return await _entities.CountAsync(criteria);
+        return await _entities.CountAsync();
+    }
 }
