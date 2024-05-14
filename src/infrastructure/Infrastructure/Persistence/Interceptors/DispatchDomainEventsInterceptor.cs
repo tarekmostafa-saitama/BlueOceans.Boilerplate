@@ -16,7 +16,7 @@ public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
-        var savingResult = base.SavingChanges(eventData, result)
+        var savingResult = base.SavingChanges(eventData, result);
         DispatchDomainEvents(eventData.Context).GetAwaiter().GetResult();
 
         return savingResult;

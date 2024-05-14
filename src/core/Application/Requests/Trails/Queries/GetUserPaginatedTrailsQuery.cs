@@ -20,7 +20,8 @@ internal sealed class GetUserPaginatedTrailsQueryHandler : IRequestHandler<GetUs
 
     public async Task<List<TrailVm>> Handle(GetUserPaginatedTrailsQuery request, CancellationToken cancellationToken)
     {
-        var spec = new Specification<Trail>(x => x.UserId == request.UserId)
+        var spec = new Specification<Trail>()
+            .ApplyCriteria(x => x.UserId == request.UserId)
             .ApplyOrderByDesc(x => x.DateTime)
             .ApplyPaging(request.PageSize * (request.Page - 1), request.PageSize);
 
