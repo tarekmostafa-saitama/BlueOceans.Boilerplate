@@ -16,7 +16,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
     }
 
 
-    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> criteria, bool trackChanges = true,
+    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> criteria, bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;
@@ -30,7 +30,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         return await query.FirstOrDefaultAsync(criteria);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = true,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;
