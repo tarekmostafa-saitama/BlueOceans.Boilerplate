@@ -56,7 +56,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
 
     private List<AuditTrail> HandleAuditingBeforeSaveChanges(string userId)
     {
-        foreach (var entry in ChangeTracker.Entries<Entity<object>>())
+        foreach (var entry in ChangeTracker.Entries<IEntity>())
             switch (entry.State)
             {
                 case EntityState.Added:
@@ -85,7 +85,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
         var trailEntries = new List<AuditTrail>();
         foreach (var entry in ChangeTracker.Entries()
                      .Where(e => e.Entity.GetType().IsGenericType &&
-                                 e.Entity.GetType().GetGenericTypeDefinition() == typeof(Entity<>))
+                                 e.Entity.GetType().GetGenericTypeDefinition() == typeof(IEntity))
                      .Where(e => e.State is EntityState.Added or EntityState.Deleted or EntityState.Modified)
                      .ToList())
         {
